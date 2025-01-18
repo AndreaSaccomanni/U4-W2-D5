@@ -67,12 +67,10 @@ public class Main {
                     case 4:
                         mioArchivio.rimuoviArticolo();
                         mioArchivio.mostraArchivio();
-
                         break;
                     case 5:
                         mioArchivio.modificaArticolo();
                         mioArchivio.mostraArchivio();
-
                         break;
                     case 6:
                         mioArchivio.statistiche();

@@ -54,16 +54,18 @@ public class Archivio {
         String autore = "";
         boolean inputValido = false;
         while (!inputValido) {
-            if (scanner.hasNext(Pattern.compile("[a-zA-Z]+"))) {
+            System.out.println(messaggio);
+            if (scanner.hasNextInt()) {
+                System.out.println("Errore: non puoi inserire un numero come nome!");
+                scanner.next();
+            } else {
                 autore = scanner.nextLine();
                 inputValido = true;
-            } else {
-                System.out.println("Errore: devi inserire un nome valido!");
-                scanner.next();
             }
         }
         return autore;
     }
+
 
     // Metodo controllo anno
     public int controlloAnno(String messaggio) {
@@ -108,7 +110,7 @@ public class Archivio {
                     periodicita = Rivista.Periodicita.SEMESTRALE;
                     break;
                 default:
-                    System.out.println("Opzione non valida. Riprova.");
+                    System.out.println("Errore! Devi scegliere un numero tra 1 e 3");
                     break;
             }
 
@@ -192,8 +194,9 @@ public class Archivio {
     }
 
     // Metodo per cercare un articolo
-    public void ricercaArticolo() {
+    public void  ricercaArticolo() {
         Scanner scanner = new Scanner(System.in);
+        //Articolo articolo;
         int i = -1;
         i = controlloInputValidoInt("1)Ricerca tramite codice ISBN\n2)Ricerca tramite anno di pubblicazione\n3)Ricerca tramite autore");
         while (i != 0) {
@@ -210,6 +213,9 @@ public class Archivio {
                         } else if (articolo instanceof Rivista) {
                             System.out.println("Rivista trovata: " + (Rivista) articolo);
                         }
+
+                        i=0;
+                        break;
                     } catch (ArticoloNonTrovato e) {
                         System.out.println(e.getMessage());
                     }
@@ -227,6 +233,8 @@ public class Archivio {
                                     ;
                         }
                         articoli.forEach(articolo -> System.out.println("Articolo trovato: " + articolo));
+                        i=0;
+                        break;
                     } catch (ArticoloNonTrovato e) {
                         System.out.println(e.getMessage());
                     }
@@ -247,15 +255,20 @@ public class Archivio {
                         }
 
                         libri.forEach(libro -> System.out.println("Articolo trovato: " + libro));
-
+                        i=0;
+                        break;
                     } catch (ArticoloNonTrovato e) {
                         System.out.println(e.getMessage());
                     }
+                    i=0;
                     break;
                 default:
                     System.out.println("Errore: scegli 1, 2 o 3.");
             }
+            i=0;
+            break;
         }
+
     }
 
 
@@ -282,23 +295,24 @@ public class Archivio {
         if (articolo != null) {
             System.out.println("Articolo trovato: " + articolo);
             if (articolo instanceof Libro) {
-                int scelta = controlloInputValidoInt("1)Modifica il titolo del libro\n2)Modifica l'anno di pubblicazione del libro\3Modifica il numero di pagine del libro\n4)Modifica l'autore del libro\n5)Modifica il genere del libro");
+                int scelta = controlloInputValidoInt("1)Modifica il titolo del libro\n2)Modifica l'anno di pubblicazione del libro\n3)Modifica il numero di pagine del libro\n4)Modifica l'autore del libro\n5)Modifica il genere del libro");
                 switch (scelta) {
                     case 1:
+                        System.out.println("Inserisci il nuovo titolo:");
                         String nuovoTitolo = scanner.nextLine();
                         articolo.titolo = nuovoTitolo;
                         break;
                     case 2:
-                        int nuovoAnno = controlloInputValidoInt("Nuovo anno di pubblicazione: ");
+                        int nuovoAnno = controlloInputValidoInt("Inserisci il nuovo anno di pubblicazione: ");
                         articolo.annoPubblicazione = nuovoAnno;
                         break;
                     case 3:
-                        int nuovePagine = controlloInputValidoInt("Nuovo numero di pagine: ");
+                        int nuovePagine = controlloInputValidoInt("Inserisci il nuovo numero di pagine: ");
                         ;
                         articolo.numeroPagine = nuovePagine;
                         break;
                     case 4:
-                        String nuovoAutore = controlloStringAutore("Nuovo autore: ");
+                        String nuovoAutore = controlloStringAutore("Inserisci il nuovo autore: ");
                         articolo.titolo = nuovoAutore;
                         break;
                     case 5:
@@ -311,23 +325,24 @@ public class Archivio {
                 System.out.println("Libro modificato con successo: " + articolo);
 
             } else if (articolo instanceof Rivista) {
-                int scelta = controlloInputValidoInt("1)Modifica il titolo del libro\n2)Modifica l'anno di pubblicazione del libro\3Modifica il numero di pagine del libro\n4)Modifica la periodicità della rivista");
+                int scelta = controlloInputValidoInt("1)Modifica il titolo della rivista\n2)Modifica l'anno di pubblicazione della rivista\3Modifica il numero di pagine della rivista\n4)Modifica la periodicità della rivista");
                 switch (scelta) {
                     case 1:
+                        System.out.println("Inserisci il nuovo titolo:");
                         String nuovoTitolo = scanner.nextLine();
                         articolo.titolo = nuovoTitolo;
                         break;
                     case 2:
-                        int nuovoAnno = controlloInputValidoInt("Nuovo anno di pubblicazione: ");
+                        int nuovoAnno = controlloInputValidoInt("Inserisci il nuovo anno di pubblicazione: ");
                         articolo.annoPubblicazione = nuovoAnno;
                         break;
                     case 3:
-                        int nuovePagine = controlloInputValidoInt("Nuovo numero di pagine: ");
+                        int nuovePagine = controlloInputValidoInt("Inserisci il nuovo numero di pagine: ");
                         ;
                         articolo.numeroPagine = nuovePagine;
                         break;
                     case 4:
-                        Rivista.Periodicita nuovaPeriodicita = controlloPeriodicita("Nuova periodicità: ");
+                        Rivista.Periodicita nuovaPeriodicita = controlloPeriodicita("Inserisci la nuova periodicità: ");
                         ((Rivista) articolo).periodicita = nuovaPeriodicita;
                         break;
                     default:
@@ -361,14 +376,15 @@ public class Archivio {
             long numeroLibri = items.values().stream().filter(libro -> libro instanceof Libro).count();
             long numeroRiviste = items.values().stream().filter(rivista -> rivista instanceof Rivista).count();
             Optional<Articolo> maxPagine = items.values().stream().max(Comparator.comparingInt(Articolo::getNumeroPagine));
+            Articolo articoloMaxPagine = maxPagine.get();
             OptionalDouble mediaNumeroPagine = items.values().stream().mapToInt(Articolo::getNumeroPagine).average();
+            double media = mediaNumeroPagine.getAsDouble();
 
-
-
+            System.out.println("-- Statistiche del catalogo --");
             System.out.println("Numero totale di libri nel catalogo: " + numeroLibri);
             System.out.println("Numero totale di riviste nel catalogo: " + numeroRiviste);
-            System.out.println("L'articolo con il maggior numero di pagine è: " + maxPagine);
-            System.out.println("La media del numero di pagine presenti in tutto il catalogo è: " + mediaNumeroPagine);
+            System.out.println("L'articolo con il maggior numero di pagine è: " + articoloMaxPagine);
+            System.out.println("La media del numero di pagine presenti in tutto il catalogo è: " + media);
         }
     }
 }
