@@ -325,7 +325,7 @@ public class Archivio {
                 System.out.println("Libro modificato con successo: " + articolo);
 
             } else if (articolo instanceof Rivista) {
-                int scelta = controlloInputValidoInt("1)Modifica il titolo della rivista\n2)Modifica l'anno di pubblicazione della rivista\3Modifica il numero di pagine della rivista\n4)Modifica la periodicità della rivista");
+                int scelta = controlloInputValidoInt("1)Modifica il titolo della rivista\n2)Modifica l'anno di pubblicazione della rivista\n3)Modifica il numero di pagine della rivista\n4)Modifica la periodicità della rivista");
                 switch (scelta) {
                     case 1:
                         System.out.println("Inserisci il nuovo titolo:");
@@ -360,7 +360,7 @@ public class Archivio {
         if (items.isEmpty()) {
             System.out.println("Il catalogo è vuoto.");
         } else {
-            System.out.println("Ora gli articoli presenti nel catalogo sono:");
+            System.out.println("CATALOGO AGGIORNATO\nOra gli articoli presenti nel catalogo sono:");
             int posizione = 1;
             for (Articolo articolo : items.values()) {
                 System.out.println(posizione + ") " + articolo);
