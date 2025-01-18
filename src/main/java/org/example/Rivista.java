@@ -1,20 +1,20 @@
 package org.example;
 
 public class Rivista extends Articolo {
-    private String periodicita;
+    Periodicita periodicita;
 
-    public Rivista(int ISBN, String titolo, int annoPubblicazione, int numeroPagine, String periodicita) {
+    public enum Periodicita {SETTIMANALE, MENSILE, SEMESTRALE}
+
+
+    public Rivista(int ISBN, String titolo, int annoPubblicazione, int numeroPagine, Periodicita periodicita) {
         super(ISBN, titolo, annoPubblicazione, numeroPagine);
         this.periodicita = periodicita;
     }
 
-    public String getString() {
+    public Periodicita getPeriodicita() {
         return periodicita;
     }
 
-    public void setPeriodicita(String periodicita) {
-        this.periodicita = periodicita;
-    }
 
     @Override
     public String toString() {

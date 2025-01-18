@@ -75,7 +75,7 @@ public class Main {
 
                         break;
                     case 6:
-                        mioArchivio.mostraArchivio();
+                        mioArchivio.statistiche();
                         break;
                     case 0:
                         System.out.println("Catalogo chiuso. A presto!");

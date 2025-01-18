@@ -1,6 +1,6 @@
 package org.example;
 
-public class Articolo {
+public abstract class Articolo {
     int ISBN;
     String titolo;
     int annoPubblicazione;
